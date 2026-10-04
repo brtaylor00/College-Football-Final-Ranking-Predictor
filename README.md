@@ -1,2 +1,28 @@
 # College Football Final Ranking Predictor
-Machine learning project predicting college football final AP rankings and College Football Playoff outcomes.
+# Predicting College Football Rankings and Playoff Outcomes
+
+## Research Question
+
+## Background and Context
+
+## Dataset
+
+## Variables
+
+## Data Understanding and Exploration
+
+## Data Cleaning and Preparation
+
+## Baseline and Model Development
+
+## Model Evaluation and Selection
+
+## Model Interpretation and Insights
+
+## Ethics and Limitations
+
+## Conclusion
+
+## Code and AI Transparency
+
+## References
