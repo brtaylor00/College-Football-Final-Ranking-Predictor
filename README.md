@@ -63,6 +63,8 @@ Different evaluation metrics were used for the two prediction tasks. For regress
 
 For classification, I used accuracy, precision, recall, F1 score, and ROC-AUC. Because playoff teams represented only 14.9% of the dataset, accuracy alone could be misleading. Recall and F1 score were particularly important because they measure how effectively the model identifies playoff teams.
 
+# Regression Results
+
 | Model | MAE | RMSE | R² |
 |---|---:|---:|---:|
 | Mean Baseline | 6.240 | 7.211 | 0.000 |
