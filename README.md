@@ -66,7 +66,7 @@ For classification, I used accuracy, precision, recall, F1 score, and ROC-AUC. B
 | Model | MAE | RMSE | R² |
 |---|---:|---:|---:|
 | Mean Baseline | 6.240 | 7.211 | 0.000 |
-| Linear Regression | **5.008** | **5.712** | **0.373** |
+| Linear Regression | 5.008 | 5.712 | 0.373 |
 | Random Forest | 5.218 | 6.163 | 0.270 |
 
 ## Ethics and Limitations
