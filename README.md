@@ -47,6 +47,9 @@ Because AP rankings are only published for the Top 25 teams, some teams did not 
 
 For the regression analysis, observations without a final AP ranking were excluded because a final numerical ranking was required as the target. The classification analysis retained the larger dataset because the playoff outcome could still be identified.
 
+## Visualizations
+![MLB Team Payroll vs. Regular-Season Wins](Ranked_Previous_Season.png)
+
 ## Baseline and Model Development
 I established a baseline for each prediction task before training the machine-learning models. For the regression problem, the baseline predicted the mean final AP ranking for every team. For the classification problem, the baseline always predicted the most common outcome, which was that a team would not make the College Football Playoff. These baselines provide simple reference points for determining whether the machine-learning models provide useful improvement.
 
@@ -64,12 +67,39 @@ Different evaluation metrics were used for the two prediction tasks. For regress
 For classification, I used accuracy, precision, recall, F1 score, and ROC-AUC. Because playoff teams represented only 14.9% of the dataset, accuracy alone could be misleading. Recall and F1 score were particularly important because they measure how effectively the model identifies playoff teams.
 
 ### Regression Results
-
 | Model | MAE | RMSE | R² |
 |---|---:|---:|---:|
 | Mean Baseline | 6.240 | 7.211 | 0.000 |
 | Linear Regression | 5.008 | 5.712 | 0.373 |
 | Random Forest | 5.218 | 6.163 | 0.270 |
+
+Linear Regression performed best on the validation data, achieving the lowest MAE and RMSE and the highest R². I therefore selected Linear Regression as the final regression model. After selecting the model, it was retrained using the 2014–2024 seasons and evaluated on the previously unseen 2025 season. The final model had a 2025 MAE of 4.701, RMSE of 5.935, and R² of 0.323.
+
+### Classification Results
+| Model | Accuracy | Precision | Recall | F1 | ROC-AUC |
+|---|---:|---:|---:|---:|---:|
+| Majority Baseline | 0.775 | 0.000 | 0.000 | 0.000 | 0.500 |
+| Logistic Regression | 0.746 | 0.455 | 0.625 | 0.526 | 0.705 |
+| Random Forest | 0.789 | 0.545 | 0.375 | 0.444 | 0.643 |
+
+Although Random Forest had higher accuracy, Logistic Regression performed better on recall, F1 score, and ROC-AUC. Since identifying playoff teams was more important than simply predicting the majority class, I selected Logistic Regression as the final classification model.
+
+When retrained on the 2014–2024 seasons and tested on 2025, Logistic Regression achieved an accuracy of 0.595, precision of 0.385, recall of 0.417, F1 score of 0.400, and ROC-AUC of 0.607.
+
+Overall, the validation results supported Linear Regression for predicting final AP ranking and Logistic Regression for predicting playoff qualification. The 2025 results provide a final test of these selections on a season that was not used during model development or selection.
+
+## Model Interpretation and Insights
+The model coefficients provide insight into which preseason information was most useful for making predictions. In the Logistic Regression model, the preseason AP ranking was substantially more influential than the previous-season final AP ranking. The preseason AP coefficient was approximately -0.182, corresponding to an odds ratio of approximately 0.833. This means that, holding the previous-season ranking constant, a one-position decrease in preseason ranking was associated with approximately a 16.7% decrease in the estimated odds of making the College Football Playoff.
+
+The previous-season final AP ranking had a much smaller coefficient of approximately -0.0035, indicating that it contributed relatively little additional predictive information once preseason AP ranking was included.
+
+The Linear Regression model showed a similar pattern. Its coefficient for preseason AP ranking was approximately 0.409, meaning that a one-position worse preseason ranking was associated with an estimated 0.41-position worse final AP ranking, holding the previous-season ranking constant.
+
+The classification confusion matrix also illustrates the model's strengths and weaknesses on the 2025 test set. Logistic Regression correctly identified 5 playoff teams and 19 non-playoff teams, while producing 6 false positives and 7 false negatives. The false negatives are particularly important because they represent teams that actually made the playoff but were not identified by the model.
+
+Overall, the models suggest that preseason expectations contain meaningful information about eventual college football success. However, the predictions are far from perfect. A team's preseason ranking cannot account for unexpected changes during a season, such as injuries, player development, coaching changes, or unexpectedly strong or weak performance.
+
+These results should therefore be interpreted as evidence of predictive relationships rather than proof that preseason AP rankings cause teams to finish at particular rankings or make the playoff.
 
 ## Ethics and Limitations
 
