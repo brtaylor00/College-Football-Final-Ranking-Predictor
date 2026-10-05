@@ -48,7 +48,21 @@ Because AP rankings are only published for the Top 25 teams, some teams did not 
 For the regression analysis, observations without a final AP ranking were excluded because a final numerical ranking was required as the target. The classification analysis retained the larger dataset because the playoff outcome could still be identified.
 
 ## Visualizations
-![MLB Team Payroll vs. Regular-Season Wins](Ranked_Previous_Season.png)
+![Preseason AP Ranking vs. Final AP Ranking with Previous Season Finish](Ranked_Previous_Season.png)
+This graph compares each team's preseason AP ranking with its final AP ranking from 2014-2025. Only teams that received a preseason AP ranking are included. Blue dots represent teams that were ranked in the previous season's final AP poll, while orange dots represent teams that were not ranked in the previous season. The dashed line represents teams finishing exactly where they were predicted to finish. Points below the line indicate teams that finished better than their preseason ranking, while points above the line indicate teams that finished worse than expected. Because a lower AP ranking represents a better ranking, both axes are inverted.
+
+The correlation between preseason and final AP ranking is 0.485, indicating a moderate positive relationship. This suggests that teams ranked highly in the preseason generally tended to finish higher in the final AP poll, although there was substantial variation in how teams actually performed. The distinction between blue and orange dots provides additional context about whether teams had been ranked the previous season. Overall, the graph shows that preseason rankings contain useful information about final rankings, but they are far from perfectly predictive.
+
+![Preseason AP Ranking vs. Final AP Ranking with CFP appearances](Pre_vs_Final.png)
+This graph compares each team's preseason AP ranking with its final AP ranking from 2014–2025, with points separated by whether the team made the College Football Playoff. Teams that made the CFP are shown in blue, while teams that did not make the CFP are shown in orange. The dashed line represents teams finishing exactly where they were predicted to finish. Points below the line represent teams that finished better than their preseason ranking, while points above the line represent teams that finished worse than expected. Because lower AP rankings represent better performance, both axes are inverted.
+
+The graph shows that CFP teams were generally concentrated among teams with strong preseason rankings and strong final rankings. However, preseason ranking was not a guarantee of playoff success. Some highly ranked preseason teams failed to make the CFP, while some teams that were ranked lower in the preseason improved enough to reach the playoff. This demonstrates why preseason information can be useful for predicting playoff participation, but cannot perfectly predict which teams will ultimately qualify.
+
+![2026 Predicted Final Ranking and CFP Probability](2026_Predictions.png)
+This graph shows the model's predictions for the 2026 college football season. Each point represents a team, with the team's predicted final AP ranking on the x-axis and its predicted probability of making the College Football Playoff on the y-axis. The final AP ranking predictions come from the linear regression model, while the CFP probabilities come from the logistic regression model. Team names are included next to each point to identify the predictions.
+
+Teams toward the left side of the graph have better predicted final AP rankings, while teams toward the top have higher predicted probabilities of making the CFP. Therefore, teams in the upper-left portion of the graph have the strongest combination of predicted final ranking and playoff probability. These predictions are based only on preseason AP ranking and the previous season's final AP ranking, so they should be interpreted as model estimates rather than predictions that account for factors such as injuries, schedule strength, recruiting, or in-season performance.
+
 
 ## Baseline and Model Development
 I established a baseline for each prediction task before training the machine-learning models. For the regression problem, the baseline predicted the mean final AP ranking for every team. For the classification problem, the baseline always predicted the most common outcome, which was that a team would not make the College Football Playoff. These baselines provide simple reference points for determining whether the machine-learning models provide useful improvement.
@@ -102,9 +116,23 @@ Overall, the models suggest that preseason expectations contain meaningful infor
 These results should therefore be interpreted as evidence of predictive relationships rather than proof that preseason AP rankings cause teams to finish at particular rankings or make the playoff.
 
 ## Ethics and Limitations
+This project has several limitations that should be considered when interpreting the results. The dataset is based on AP rankings, so it primarily represents teams that received national attention rather than all FBS teams. Unranked teams were represented as a rank of 26, which is a modeling decision and does not mean that every unranked team was equally strong. The classification dataset was also imbalanced, with far more teams that did not make the CFP than teams that did.
+
+Another limitation is that the model uses only preseason AP ranking and the previous season's final AP ranking. Important factors such as recruiting, returning players, schedule strength, injuries, coaching changes, and team performance during the season are not included. In addition, the CFP expanded from four teams to twelve teams in 2024, meaning that "making the playoff" was not defined identically throughout the entire dataset.
+
+The predictions should therefore be viewed as estimates rather than guarantees. A false positive in the playoff model means the model predicts that a team will make the CFP when it does not, while a false negative means the model fails to identify a team that actually makes the CFP. Although these errors are not likely to cause serious harm in this context, they could lead to misleading conclusions if the model were treated as a definitive forecasting tool.
+
+Finally, this project does not establish causation. The relationships identified by the models show patterns in the historical data, but they do not prove that preseason rankings or previous rankings cause teams to finish at particular positions or make the CFP.
 
 ## Conclusion
+This project examined how well preseason information can be used to predict a college football team's final AP ranking and whether it makes the College Football Playoff. Using preseason AP ranking and previous-season final AP ranking, the models found that preseason ranking was the most useful predictor of both outcomes.
+
+For final AP ranking, the linear regression model performed better than the random forest model, achieving a 2025 MAE of 4.70 and R² of 0.323. For playoff prediction, logistic regression was selected over the random forest model because it provided better recall, F1 score, and ROC-AUC during validation. On the 2025 test set, it correctly identified 5 of 12 playoff teams, with an overall accuracy of 59.5% and ROC-AUC of 0.607.
+
+Overall, the results show that preseason expectations contain useful information about how teams will finish, but they cannot fully predict the outcome of a college football season. Adding factors such as team performance, recruiting, returning production, schedule strength, and injuries could potentially improve future versions of the models.
 
 ## Code and AI Transparency
+The complete Python code used for data collection, cleaning, visualization, model development, evaluation, and prediction is available in the project notebook: 
+![Predicting College Football Rankings and Playoff Outcomes](Code.ipynb)
 
-## References
+ChatGPT was used as an AI assistance tool during this project to help with Python code debugging, data-processing strategies, visualization ideas, model interpretation, and drafting portions of the written report. I remained responsible for making decisions about the research question, variables, models, and analysis. I also ran and reviewed the code and used the resulting outputs to report the findings in this project.
